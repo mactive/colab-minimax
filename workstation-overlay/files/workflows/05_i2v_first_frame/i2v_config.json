@@ -1,0 +1,46 @@
+{
+  "project_prefix": "SpaceMining_H3_Native",
+  "output_subdir": "SpaceMining_H3_Native",
+  "profile": "scheme_b",
+  "unet_name": "minimax_h3_fl2va_pruned_fp8_scaled.safetensors",
+  "clip_name": "qwen3vl_32b_heretic_minimax_h3_nvfp4.safetensors",
+  "video_vae_name": "minimax_h3_video_vae_fp16.safetensors",
+  "audio_vae_name": "minimax_h3_audio_vae_fp32.safetensors",
+  "use_turbo_lora": false,
+  "turbo_lora_name": "minimax_h3_fl2v_turbo_8step_v1.0_comfyui_bf16.safetensors",
+  "turbo_lora_strength": 0.85,
+  "steps": 25,
+  "sampler_name": "res_multistep",
+  "scheduler": "simple",
+  "shift_video": 12.0,
+  "shift_audio": 3.0,
+  "width": 1344,
+  "height": 768,
+  "fps": 24.0,
+  "default_length": 243,
+  "prompt_lang": "en",
+  "stitch_preview": true,
+  "preview_mp4": "SpaceMining_H3_Native_Shots01_02_Preview.mp4",
+  "shots": [
+    {
+      "shot_id": 1,
+      "title": "冰封母港",
+      "first_frame": "001.png",
+      "output_name": "001.mp4",
+      "length": 243,
+      "seed": 2026112501,
+      "prompt_en": "10 seconds, 16:9 image-to-video, one continuous shot. Detailed hand-drawn 2D science-fiction animation, dense industrial draftsmanship and layered drawn mechanical effects reminiscent of Katsuhiro Otomo works, with the epic spatial depth and adventurous wonder of Castle in the Sky. Original machine designs; watercolor/gouache backgrounds, precise ink contours, restrained cel shading, subtle paper grain. Midnight-blue space, ivory ceramic composite panels, amber service lights, limited warning red. Advanced electromagnetic engineering, precision servos, magnetic bearings, coolant plumbing, worn fasteners and repair patches; no Victorian steam machinery. Preserve the supplied first frame: frozen Earth curves across the bottom, a connected rank of enormous blue-lit engine rings recedes leftward, close machinery fills the right edge, and asteroids hang above. The tiny mining convoy is already visible at lower right. 0–1s establish this composition. 1–8s pan smoothly right along Earth's limb, producing approximately 20% horizontal frame displacement; gradually give the existing convoy more compositional space while the engine structures move left across the frame. Keep the convoy tiny against the engines and Earth; do not introduce a second convoy. Its craft maintain steady spacing and slow inertial travel. Blue engine illumination remains controlled, with subtle hand-drawn light modulation. 8–10s ease the pan to a stable endpoint. Preserve the horizon's orientation, ring geometry, connecting trusses, pipes and cables. Exterior vacuum: any existing exhaust remains narrow and faint, with no atmospheric smoke or billowing steam. All light and particle effects remain frame-by-frame 2D cartoon animation, never photorealistic or 3D-rendered. No added explosions or mechanical events. ABSOLUTELY NO PEOPLE, FACES, HUMAN SILHOUETTES, CREW, PILOTS OR HUMAN REFLECTIONS. No cuts, whip pans, continuous shaking, horizon rolls, speech, subtitles, captions or music.",
+      "prompt_zh": "10秒，16:9图生视频，一个连续镜头。精细二维手绘工业科幻动画，具有大友克洋作品般密集的工业线描与层叠手绘机械特效，以及《天空之城》般宏大的空间纵深和冒险奇观感。原创机械设计；水彩与水粉背景、精确墨线、克制的赛璐璐明暗、细微纸张颗粒。午夜蓝太空、象牙白陶瓷复合装甲、琥珀色维护灯、少量警示红。采用先进电磁工程、精密伺服、磁轴承和冷却管路，保留磨损紧固件与修补板，不呈现维多利亚蒸汽机械。严格承接首帧：冰封地球弧面横贯下方，连接成列的巨大蓝光发动机圆环向左侧远处递减，右缘是近景机械，上方悬有小行星；微小采矿运输队已经出现在右下方。0—1秒建立这一构图。1—8秒沿地球边缘平稳向右横摇，画面水平位移约20%，让已有运输队逐渐获得更多构图空间，发动机结构随摇镜向左移出。运输队始终远小于发动机和地球，不新增第二支舰队；各船保持稳定间距，依惯性缓慢航行。蓝色发动机光仅作克制的手绘明暗变化。8—10秒平滑减速至稳定终点。保持地平线方向、圆环形状、连接桁架、管路和线缆连续。外部为真空，已有尾流仅保持细窄微弱，不出现大气浓烟或翻滚蒸汽。所有光效与粒子均为逐帧二维手绘卡通特效，不转为写实影像或三维渲染，不增加爆炸或额外机械事件。严格无人，不出现人物、脸、人体剪影、船员、驾驶员或人物倒影。不切镜、不甩镜、不持续抖动、不旋转地平线；无说话、字幕、文字标注和音乐。"
+    },
+    {
+      "shot_id": 2,
+      "title": "黑暗采区",
+      "first_frame": "002.png",
+      "output_name": "002.mp4",
+      "length": 243,
+      "seed": 2026112502,
+      "prompt_en": "10 seconds, 16:9 image-to-video, one continuous shot. Detailed hand-drawn 2D science-fiction animation, dense industrial draftsmanship and layered drawn mechanical effects reminiscent of Katsuhiro Otomo works, with the epic spatial depth and adventurous wonder of Castle in the Sky. Original machine designs; watercolor/gouache backgrounds, precise ink contours, restrained cel shading, subtle paper grain. Midnight-blue space, ivory ceramic composite panels, amber service lights, limited warning red. Advanced electromagnetic engineering, precision servos, magnetic bearings, coolant plumbing, worn fasteners and repair patches; no Victorian steam machinery. Match the supplied first frame: a two-kilometer irregular ice-rich mining body already dominates the center and right, with an excavated circular basin, fixed crane, surface installations and attached plumbing; a cropped industrial vessel and open mechanical gripper occupy the left foreground, a ring station sits at upper left, and amber navigation buoys mark the approach below. 0–1s establish the existing composition. 1–8s dolly smoothly forward along the buoy-marked approach toward the body, maintaining clearance from the foreground gripper and buoys. Use visible depth parallax, with nearby landmarks shifting approximately 15–25% of the frame and the body growing moderately larger; do not reset it to a distant speck. Foreground machinery and nearby buoys pass toward the frame edges faster than the mining installation. Keep the basin recognizable and the crane, gripper and attached machinery mechanically still. 8–10s ease to a stable endpoint before reaching the surface. Preserve the body's irregular silhouette, ice strata, structural connections and buoy arrangement. Exterior vacuum: loose fragments drift slowly along inertial trajectories; no falling debris, billowing smoke or steam. Any light or particle effects must remain subtle, frame-by-frame hand-drawn 2D cartoon effects. No new mining action or explosions. ABSOLUTELY NO PEOPLE, FACES, HUMAN SILHOUETTES, CREW, PILOTS OR HUMAN REFLECTIONS. No photorealism, 3D rendering, cuts, whip pans, continuous shaking, horizon rolls, speech, subtitles, captions or music.",
+      "prompt_zh": "10秒，16:9图生视频，一个连续镜头。精细二维手绘工业科幻动画，具有大友克洋作品般密集的工业线描与层叠手绘机械特效，以及《天空之城》般宏大的空间纵深和冒险奇观感。原创机械设计；水彩与水粉背景、精确墨线、克制的赛璐璐明暗、细微纸张颗粒。午夜蓝太空、象牙白陶瓷复合装甲、琥珀色维护灯、少量警示红。先进电磁工程、精密伺服、磁轴承、冷却管路、磨损紧固件和修补板，不呈现维多利亚蒸汽机械。严格承接首帧：两公里级不规则富冰矿体已占据画面中部与右侧，其上有圆形开采凹坑、固定吊机、地表设施及连接管路；左侧前景是被画框裁切的工业船体与张开的机械夹爪，左上方有环形空间设施，下方琥珀色导航浮标标示进场航线。0—1秒建立现有构图。1—8秒沿浮标航线稳定前推，朝矿体接近，与前景夹爪和浮标保持安全间距。通过明显的纵深视差，使近处参照物产生约15—25%的画面位移，矿体适度增大，不把首帧已有的大矿体重置成远处小点。前景机械和近处浮标比矿区设施更快滑向画框边缘。圆形凹坑持续可辨，吊机、夹爪及附着设备保持机械静止。8—10秒缓停于尚未抵达矿体表面的位置。保持不规则外轮廓、冰层、结构连接与浮标布局连续。外部为真空，零散碎片沿惯性轨迹缓慢漂移，不出现向下坠落的碎屑、翻滚浓烟或蒸汽。若有光效与粒子，只采用克制的逐帧二维手绘卡通特效，不增加采掘动作或爆炸。严格无人，不出现人物、脸、人体剪影、船员、驾驶员或人物倒影。不转写实或三维渲染；不切镜、不甩镜、不持续抖动、不旋转地平线；无说话、字幕、文字标注和音乐。"
+    }
+  ]
+}

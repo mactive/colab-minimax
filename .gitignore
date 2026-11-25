@@ -1,0 +1,23 @@
+# upstream clone：由 bootstrap.sh 生成，改动存在 workstation-overlay/
+colab-ultra-workstation/
+
+# 运行时 / 日志 / 临时文件
+runtime/
+logs/
+*.new
+*.tmp
+__pycache__/
+.DS_Store
+
+# 渲染产物与大文件
+*.mp4
+*.mov
+*.safetensors
+*.ckpt
+*.tar.gz
+
+# 首帧图属于个人素材，不提交（放进 colab-ultra-workstation/workflows/05_i2v_first_frame/inputs/ 使用）
+workstation-overlay/files/**/inputs/*.png
+workstation-overlay/files/**/inputs/*.jpg
+workstation-overlay/files/**/inputs/*.jpeg
+workstation-overlay/files/**/inputs/*.webp

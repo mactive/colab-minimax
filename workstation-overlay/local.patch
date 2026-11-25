@@ -1,0 +1,101 @@
+diff --git a/scripts/launch_g4_comfyui_fast.py b/scripts/launch_g4_comfyui_fast.py
+index dca62c2..85ef223 100755
+--- a/scripts/launch_g4_comfyui_fast.py
++++ b/scripts/launch_g4_comfyui_fast.py
+@@ -487,7 +487,16 @@ def main() -> None:
+ 
+     wire_hybrid_models_dir()
+ 
+-    print("=== [3/3] 启动 ComfyUI (--highvram --disable-mmap --fast) + Cloudflare 隧道 ===", flush=True)
++    gpu_vram_mb = 0
++    try:
++        vram_out = sh("nvidia-smi --query-gpu=memory.total --format=csv,noheader,nounits").strip().splitlines()
++        if vram_out:
++            gpu_vram_mb = int(vram_out[0].strip())
++    except Exception:
++        gpu_vram_mb = 0
++
++    vram_flags = ["--highvram", "--disable-mmap", "--fast"] if gpu_vram_mb >= 75000 else ["--disable-mmap"]
++    print(f"=== [3/3] 启动 ComfyUI ({' '.join(vram_flags)}, VRAM={gpu_vram_mb} MB) + Cloudflare 隧道 ===", flush=True)
+     if not Path("/usr/local/bin/cloudflared").exists():
+         sh(
+             "wget -q https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64 "
+@@ -506,9 +515,7 @@ def main() -> None:
+             "127.0.0.1",
+             "--port",
+             "8188",
+-            "--highvram",
+-            "--disable-mmap",
+-            "--fast",
++            *vram_flags,
+         ],
+         cwd=str(LOCAL_COMFY),
+         stdout=comfy_log,
+diff --git a/scripts/setup_minimax_h3_comfyui.py b/scripts/setup_minimax_h3_comfyui.py
+index 60be70b..8625519 100644
+--- a/scripts/setup_minimax_h3_comfyui.py
++++ b/scripts/setup_minimax_h3_comfyui.py
+@@ -197,11 +197,38 @@ DOWNLOAD_MANIFEST = [
+     ),
+ ]
+ 
++def remote_size(url: str) -> int | None:
++    """远端文件真实字节数（HF 的 302 带 X-Linked-Size，否则取最后一跳 Content-Length）。"""
++    try:
++        out = subprocess.run(["curl", "-sIL", "--max-time", "30", url], capture_output=True, text=True).stdout
++    except Exception:
++        return None
++    linked, length = None, None
++    for line in out.splitlines():
++        k, _, v = line.partition(":")
++        k = k.strip().lower()
++        if k == "x-linked-size" and v.strip().isdigit():
++            linked = int(v.strip())
++        elif k == "content-length" and v.strip().isdigit():
++            length = int(v.strip())
++    return linked or length
++
++
++def disk_report() -> str:
++    return subprocess.run("df -h /tmp | tail -1", shell=True, capture_output=True, text=True).stdout.strip()
++
++
+ for idx, (url, dest) in enumerate(DOWNLOAD_MANIFEST, 1):
+-    if dest.exists() and dest.stat().st_size > 1024 * 100:
+-        sz_gb = dest.stat().st_size / (1024**3)
+-        print(f"⚡ [{idx}/{len(DOWNLOAD_MANIFEST)}] 已存在于云盘，跳过: {dest.name} ({sz_gb:.2f} GB)", flush=True)
+-        continue
++    want = remote_size(url)
++    if dest.exists():
++        have = dest.stat().st_size
++        # 只有字节数与远端完全一致才算完成；之前用 ">100KB" 判断，半截文件也会被跳过
++        if (want and have == want) or (not want and have > 1024 * 100):
++            print(f"⚡ [{idx}/{len(DOWNLOAD_MANIFEST)}] 已完整存在于云盘，跳过: {dest.name} ({have / (1024**3):.2f} GB)", flush=True)
++            continue
++        print(f"♻️ [{idx}/{len(DOWNLOAD_MANIFEST)}] 云盘上的文件不完整 ({have} / {want} bytes)，删除后重新下载: {dest.name}", flush=True)
++        dest.unlink(missing_ok=True)
++    print(f"💽 磁盘: {disk_report()}", flush=True)
+ 
+     t0 = time.time()
+     tmp_file = TMP_DIR / dest.name
+@@ -215,6 +242,8 @@ for idx, (url, dest) in enumerate(DOWNLOAD_MANIFEST, 1):
+     if rc != 0 or not tmp_file.exists():
+         raise RuntimeError(f"❌ 下载失败: {dest.name} (rc={rc})")
+ 
++    if want and tmp_file.stat().st_size != want:
++        raise RuntimeError(f"❌ 下载大小不符: {dest.name} ({tmp_file.stat().st_size} != {want})")
+     sz_gb = tmp_file.stat().st_size / (1024**3)
+     dl_sec = max(0.1, time.time() - t0)
+     print(
+@@ -223,7 +252,10 @@ for idx, (url, dest) in enumerate(DOWNLOAD_MANIFEST, 1):
+     )
+     dest.parent.mkdir(parents=True, exist_ok=True)
+     shutil.move(str(tmp_file), str(dest))
+-    print(f"✅ [{idx}/{len(DOWNLOAD_MANIFEST)}] 已写入挂载点: {dest.name} ({dest.stat().st_size / (1024**3):.2f} GB)", flush=True)
++    got = dest.stat().st_size
++    if want and got != want:
++        raise RuntimeError(f"❌ 写入云盘后大小不符: {dest.name} ({got} != {want})")
++    print(f"✅ [{idx}/{len(DOWNLOAD_MANIFEST)}] 已写入挂载点: {dest.name} ({got / (1024**3):.2f} GB)，DriveFS 将在后台上传到云端", flush=True)
+ 
+ # 同步一份 BUNNY Bridge 权重到 models/model_patches 以防双路径扫描
+ for b_name in ("BUNNY_H3_ActionLogic_Bridge_V1.safetensors", "BUNNY_H3_ActionLogic_Bridge_V2.safetensors"):
